@@ -2,3 +2,5 @@ main idea of js-
 1.save the data (informataion about the product)
 2. generate the html
 3. make it interactive
+
+.dataset - this property gives all the data attributes attached to the element.
