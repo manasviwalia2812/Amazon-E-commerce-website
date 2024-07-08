@@ -4,3 +4,7 @@ main idea of js-
 3. make it interactive
 
 .dataset - this property gives all the data attributes attached to the element.
+
+modules: 
+  1. avoids naming conflects
+  2. dont have to worry about order of the files.

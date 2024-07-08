@@ -1,4 +1,5 @@
 //save the data (data structure)
+import {cart as cart} from '../data/cart.js'
 
 let productsHTML='';
 
