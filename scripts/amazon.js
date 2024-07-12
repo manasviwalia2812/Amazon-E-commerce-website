@@ -1,12 +1,10 @@
-//save the data (data structure)
-import {cart, addToCart} from '../data/cart.js'
-import {products as products} from '../data/products.js'
-import { formatCurrency } from './utils/money.js';
+import {cart, addToCart} from '../data/cart.js';
+import {products} from '../data/products.js';
+import {formatCurrency} from './utils/money.js';
 
-let productsHTML='';
+let productsHTML = '';
 
-//generate html
-products.forEach((product)=>{
+products.forEach((product) => {
   productsHTML += `
     <div class="product-container">
       <div class="product-image-container">
@@ -20,14 +18,14 @@ products.forEach((product)=>{
 
       <div class="product-rating-container">
         <img class="product-rating-stars"
-          src="images/ratings/rating-${product.rating.stars *10}.png">
+          src="${product.getStarsUrl()}">
         <div class="product-rating-count link-primary">
-          ${product.rating.count} 
+          ${product.rating.count}
         </div>
       </div>
 
       <div class="product-price">
-        ${formatCurrency(product.priceCents)}
+        ${product.getPrice()}
       </div>
 
       <div class="product-quantity-container">
@@ -45,6 +43,8 @@ products.forEach((product)=>{
         </select>
       </div>
 
+      ${product.extraInfoHTML()}
+
       <div class="product-spacer"></div>
 
       <div class="added-to-cart">
@@ -52,21 +52,21 @@ products.forEach((product)=>{
         Added
       </div>
 
-      <button class="add-to-cart-button button-primary js-add-to-cart" 
+      <button class="add-to-cart-button button-primary js-add-to-cart"
       data-product-id="${product.id}">
         Add to Cart
       </button>
     </div>
   `;
-})
+});
 
-document.querySelector('.js-products-grid').innerHTML= productsHTML;
+document.querySelector('.js-products-grid').innerHTML = productsHTML;
 
-function updateCartQuantity(){
-  let cartQuantity=0;
+function updateCartQuantity() {
+  let cartQuantity = 0;
 
-  cart.forEach((item)=>{
-    cartQuantity+=item.quantity;
+  cart.forEach((cartItem) => {
+    cartQuantity += cartItem.quantity;
   });
 
   document.querySelector('.js-cart-quantity')
@@ -74,9 +74,9 @@ function updateCartQuantity(){
 }
 
 document.querySelectorAll('.js-add-to-cart')
-  .forEach((button)=>{
-    button.addEventListener('click',()=>{
-      const productId=button.dataset.productId;    //converts from kebab-case to camelCase
+  .forEach((button) => {
+    button.addEventListener('click', () => {
+      const productId = button.dataset.productId;
       addToCart(productId);
       updateCartQuantity();
     });
