@@ -5,6 +5,23 @@ import { renderPaymentSummary} from "./checkout/paymentSummary.js";
 import { loadProducts, loadProductsFetch } from "../data/products.js";
 import { loadCart } from "../data/cart.js";
 
+async function loadPage(){              //returns a promise
+
+  await loadProductsFetch()             //await lets us write asyn code like normal code 
+
+  await new Promise((resolve)=>{
+    loadCart(()=>{
+      resolve();
+    });
+
+  })
+
+  renderOrderSummary();
+  renderPaymentSummary();
+}
+loadPage();
+
+/*
 Promise.all([
   loadProductsFetch(),
   new Promise((resolve)=>{
@@ -17,6 +34,7 @@ Promise.all([
   renderOrderSummary();
   renderPaymentSummary();
 });
+*/
 
 /*
 new Promise((resolve)=>{                //promises. keep the code flat. only run a function when the first one is finished
