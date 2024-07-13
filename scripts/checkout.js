@@ -5,16 +5,21 @@ import { renderPaymentSummary} from "./checkout/paymentSummary.js";
 import { loadProducts, loadProductsFetch } from "../data/products.js";
 import { loadCart } from "../data/cart.js";
 
-async function loadPage(){              //returns a promise
+async function loadPage(){  
+  try{
+    //throw 'error1';           //to manually create errors
+    await loadProductsFetch()             //await lets us write asyn code like normal code 
 
-  await loadProductsFetch()             //await lets us write asyn code like normal code 
-
-  await new Promise((resolve)=>{
-    loadCart(()=>{
-      resolve();
+    await new Promise((resolve,reject)=>{
+      loadCart(()=>{
+        //reject('error3')          //manual error in promises
+        resolve();
+      });
     });
 
-  })
+  } catch(error){
+    console.log('unexpected error. try again later.');
+  }                     //error handling in async await         
 
   renderOrderSummary();
   renderPaymentSummary();
