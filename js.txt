@@ -19,3 +19,10 @@ we prefer esm version of library. do use import and export from the internet.
   we use external library dayjs() and do calculations
     .add(no. of days, length of time). eg .add(7,'days')
     .format('string'). we can use the string form the docs of dayjs to display month, day,date in an easy to read format.
+
+Backend:
+  4 types of requests:
+  1. GET - to get data from the Backend
+  2. POST - to create something
+  3. PUT - to update something
+  4. DELETE - to delete something
