@@ -75,6 +75,7 @@ function renderProductsGrid(){
 
     document.querySelector('.js-cart-quantity')
       .innerHTML = cartQuantity;
+    return cartQuantity;
   }
 
   document.querySelectorAll('.js-add-to-cart')
@@ -86,3 +87,30 @@ function renderProductsGrid(){
       });
     });
 }
+
+document.querySelector('.js-search-bar')
+  .addEventListener('input', (event) => {
+    const searchQuery = event.target.value.toLowerCase();
+    const products = document.querySelectorAll('.product-container');
+
+    products.forEach((product) => {
+      const productName = product.querySelector('.product-name').textContent.toLowerCase();
+      const productKeywords = product.keywords;
+
+      let matches = false;
+      if (productKeywords) {
+        for (const keyword of productKeywords) {
+          if (keyword.toLowerCase().includes(searchQuery)) {
+            matches = true;
+            break;
+          }
+        }
+      }
+
+      if (matches || productName.includes(searchQuery)) {
+        product.style.display = 'block';
+      } else {
+        product.style.display = 'none';
+      }
+    });
+  });

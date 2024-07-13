@@ -3,7 +3,7 @@ import { renderPaymentSummary} from "./checkout/paymentSummary.js";
 //import '../data/cart-class.js';
 //import '../data/backend-practice.js';
 import { loadProducts, loadProductsFetch } from "../data/products.js";
-import { loadCart } from "../data/cart.js";
+import { cart,loadCart } from "../data/cart.js";
 
 async function loadPage(){  
   try{
@@ -67,3 +67,5 @@ loadProducts(()=>{                //callbacks. become more and more nested if we
   })
 });
 */
+
+
