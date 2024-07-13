@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 main idea of js-
 1.save the data (informataion about the product)
 2. generate the html
@@ -25,4 +26,33 @@ Backend:
   1. GET - to get data from the Backend
   2. POST - to create something
   3. PUT - to update something
+=======
+main idea of js-
+1.save the data (informataion about the product)
+2. generate the html
+3. make it interactive
+
+.dataset - this property gives all the data attributes attached to the element.
+
+modules: 
+  1. avoids naming conflects
+  2. dont have to worry about order of the files.
+
+for the checkout page delivery option. 
+  we get today's date.
+  do calculations (eg- add 7 days,etc)
+  display the date in easy-to-read format
+
+we prefer esm version of library. do use import and export from the internet.
+
+  we use external library dayjs() and do calculations
+    .add(no. of days, length of time). eg .add(7,'days')
+    .format('string'). we can use the string form the docs of dayjs to display month, day,date in an easy to read format.
+
+Backend:
+  4 types of requests:
+  1. GET - to get data from the Backend
+  2. POST - to create something
+  3. PUT - to update something
+>>>>>>> origin/master
   4. DELETE - to delete something
