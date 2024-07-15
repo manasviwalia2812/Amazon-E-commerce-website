@@ -14,6 +14,7 @@ async function loadPage(){
       loadCart(()=>{
         //reject('error3')          //manual error in promises
         resolve();
+        updateCartQuantity();
       });
     });
 
@@ -23,6 +24,7 @@ async function loadPage(){
 
   renderOrderSummary();
   renderPaymentSummary();
+  
 }
 loadPage();
 
@@ -67,5 +69,18 @@ loadProducts(()=>{                //callbacks. become more and more nested if we
   })
 });
 */
+export function updateCartQuantity() {
+  let cartQuantity = 0;
+
+  cart.forEach((cartItem) => {
+    cartQuantity += cartItem.quantity;
+  });
+
+  document.querySelector('.js-cart-quantity')
+    .innerHTML = cartQuantity<2 ? `${cartQuantity} item` : `${cartQuantity} items`;
+  return cartQuantity;
+}
+document.querySelector('.js-order-summary').addEventListener('update', updateCartQuantity);
+
 
 

@@ -66,24 +66,14 @@ function renderProductsGrid(){
 
   document.querySelector('.js-products-grid').innerHTML = productsHTML;
 
-  function updateCartQuantity() {
-    let cartQuantity = 0;
-
-    cart.forEach((cartItem) => {
-      cartQuantity += cartItem.quantity;
-    });
-
-    document.querySelector('.js-cart-quantity')
-      .innerHTML = cartQuantity;
-    return cartQuantity;
-  }
-
   document.querySelectorAll('.js-add-to-cart')
     .forEach((button) => {
       button.addEventListener('click', () => {
         const productId = button.dataset.productId;
         addToCart(productId);
-        updateCartQuantity();
+        let cartQuantityNumber=updateCartQuantity();
+        document.querySelector('.js-cart-quantity')
+        .innerHTML = cartQuantityNumber;
       });
     });
 }
@@ -114,3 +104,12 @@ document.querySelector('.js-search-bar')
       }
     });
   });
+
+export function updateCartQuantity() {
+  let cartQuantity = 0;
+
+  cart.forEach((cartItem) => {
+    cartQuantity += cartItem.quantity;
+  });
+  return cartQuantity;
+}
