@@ -1,5 +1,6 @@
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 import { getProduct, loadProductsFetch } from './products.js';
+import { addToCart } from './cart.js';
 
 export const orders = JSON.parse(localStorage.getItem('orders')) || [];
 
@@ -16,7 +17,7 @@ export async function displayOrders() {
   await loadProductsFetch(); // Ensure products are loaded before displaying orders
 
   const orderContainer = document.querySelector('.js-order-container');
-  orderContainer.innerHTML = ''; 
+  orderContainer.innerHTML = '';
 
   orders.forEach(async (order) => {
     const orderHTML = `
@@ -44,13 +45,13 @@ export async function displayOrders() {
           if (matchingProduct) {
             return `
               <div class="product-image-container">
-                 <img src="${matchingProduct.image}" alt="${matchingProduct.name}">
+                <img src="${matchingProduct.image}" alt="${matchingProduct.name}">
               </div>
               <div class="product-details">
                 <div class="product-name">${matchingProduct.name}</div>
                 <div class="product-delivery-date">Arriving on: ${dayjs(product.estimatedDeliveryTime).format('MMMM D')}</div>
                 <div class="product-quantity">Quantity: ${product.quantity}</div>
-                <button class="buy-again-button button-primary">
+                <button class="buy-again-button js-buy-again-button button-primary" data-product-id="${product.productId}">
                   <img class="buy-again-icon" src="images/icons/buy-again.png">
                   <span class="buy-again-message">Buy it again</span>
                 </button>
@@ -69,6 +70,23 @@ export async function displayOrders() {
       </div>
     `;
     orderContainer.innerHTML += orderHTML;
+    attachBuyAgainListeners(); // Attach event listeners after rendering orders
+  });
+
+  
+}
+
+function attachBuyAgainListeners() {
+  const buttons = document.querySelectorAll('.js-buy-again-button');
+
+  buttons.forEach(button => {
+    button.addEventListener('click', async () => {
+      const productId = button.dataset.productId;
+      console.log('Adding product to cart:', productId);
+      await addToCart(productId);
+      console.log('Product added to cart:', productId);
+      window.location.href = 'checkout.html'; // Redirect to checkout page
+    });
   });
 }
 
