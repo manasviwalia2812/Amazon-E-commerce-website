@@ -83,7 +83,7 @@ function attachBuyAgainListeners() {
     button.addEventListener('click', async () => {
       const productId = button.dataset.productId;
       console.log('Adding product to cart:', productId);
-      await addToCart(productId);
+      await addToCart(productId,1);
       console.log('Product added to cart:', productId);
       window.location.href = 'checkout.html'; // Redirect to checkout page
     });

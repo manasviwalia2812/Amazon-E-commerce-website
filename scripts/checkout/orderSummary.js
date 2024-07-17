@@ -1,7 +1,6 @@
-import {cart, removeFromCart, updateDeliveryOption} from '../../data/cart.js';
+import {cart, removeFromCart, updateDeliveryOption, addToCart} from '../../data/cart.js';
 import {products, getProduct} from '../../data/products.js';
 import {formatCurrency} from '../utils/money.js';
-import {hello} from 'https://unpkg.com/supersimpledev@1.0.1/hello.esm.js';
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 import {deliveryOptions, getDeliveryOption} from '../../data/deliveryOptions.js';
 import {renderPaymentSummary} from './paymentSummary.js';
@@ -52,7 +51,9 @@ export function renderOrderSummary() {
               <span>
                 Quantity: <span class="quantity-label js-quantity-label">${cartItem.quantity}</span>
               </span>
-              <span class="update-quantity-link link-primary">
+              <span class="update-quantity-link link-primary js-update-link 
+                js-update-link-${matchingProduct.id}"
+                data-product-id="${matchingProduct.id}">
                 Update
               </span>
               <span class="delete-quantity-link link-primary js-delete-link
@@ -136,6 +137,26 @@ export function renderOrderSummary() {
           container.remove();
         }
   
+        renderPaymentSummary();
+        updateCartQuantity();
+      });
+    });
+
+  document.querySelectorAll('.update-quantity-link')
+    .forEach((link) => {
+      link.addEventListener('click', async () => {
+        const productId = link.dataset.productId;
+        const container = document.querySelector(`.js-cart-item-container-${productId}`);
+        const quantityLabel = container.querySelector('.js-quantity-label');
+        let quantity = Number(quantityLabel.innerHTML);
+        
+        quantity++; // Increment quantity on the page
+        quantityLabel.innerHTML = quantity;
+        
+        // Update the cart item quantity using addToCart
+        await addToCart(productId,1);
+        
+        renderOrderSummary();
         renderPaymentSummary();
         updateCartQuantity();
       });
