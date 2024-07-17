@@ -66,7 +66,7 @@ function renderProductsGrid(){
 
   document.querySelector('.js-products-grid').innerHTML = productsHTML;
 
-  let dataQuantity;
+  let dataQuantity=1;
 
   document.querySelectorAll('.js-quantity-select').forEach((select) =>{
     select.addEventListener('change', function() {
