@@ -33,17 +33,17 @@ function renderProductsGrid(){
         </div>
 
         <div class="product-quantity-container">
-          <select>
-            <option selected value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
+          <select class="js-quantity-select">
+            <option selected value="1" data-quantity="1">1</option>
+            <option value="2" data-quantity="2">2</option>
+            <option value="3" data-quantity="3">3</option>
+            <option value="4" data-quantity="4">4</option>
+            <option value="5" data-quantity="5">5</option>
+            <option value="6" data-quantity="6">6</option>
+            <option value="7" data-quantity="7">7</option>
+            <option value="8" data-quantity="8">8</option>
+            <option value="9" data-quantity="9">9</option>
+            <option value="10" data-quantity="10">10</option>
           </select>
         </div>
 
@@ -66,11 +66,21 @@ function renderProductsGrid(){
 
   document.querySelector('.js-products-grid').innerHTML = productsHTML;
 
+  let dataQuantity;
+
+  document.querySelectorAll('.js-quantity-select').forEach((select) =>{
+    select.addEventListener('change', function() {
+      const selectedOption = this.options[this.selectedIndex];
+      const selectedQuantity = selectedOption.value;
+      dataQuantity = Number(selectedOption.dataset.quantity);      
+    });
+  })
+
   document.querySelectorAll('.js-add-to-cart')
     .forEach((button) => {
       button.addEventListener('click', () => {
         const productId = button.dataset.productId;
-        addToCart(productId);
+        addToCart(productId,dataQuantity);
         let cartQuantityNumber=updateCartQuantity();
         document.querySelector('.js-cart-quantity')
         .innerHTML = cartQuantityNumber;
