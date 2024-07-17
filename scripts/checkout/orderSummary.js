@@ -50,7 +50,7 @@ export function renderOrderSummary() {
             <div class="product-quantity
               js-product-quantity-${matchingProduct.id}">
               <span>
-                Quantity: <span class="quantity-label">${cartItem.quantity}</span>
+                Quantity: <span class="quantity-label js-quantity-label">${cartItem.quantity}</span>
               </span>
               <span class="update-quantity-link link-primary">
                 Update
@@ -123,17 +123,24 @@ export function renderOrderSummary() {
     .forEach((link) => {
       link.addEventListener('click', () => {
         const productId = link.dataset.productId;
+        const container = document.querySelector(`.js-cart-item-container-${productId}`);
+        const quantityLabel = container.querySelector('.js-quantity-label');
+        let quantityId = Number(quantityLabel.innerHTML);
+  
         removeFromCart(productId);
-
-        const container = document.querySelector(
-          `.js-cart-item-container-${productId}`
-        );
-        container.remove();
-
+  
+        if (quantityId > 1) {
+          quantityId--;
+          quantityLabel.innerHTML = quantityId;
+        } else {
+          container.remove();
+        }
+  
         renderPaymentSummary();
         updateCartQuantity();
       });
     });
+  
 
   document.querySelectorAll('.js-delivery-option')
     .forEach((element) => {

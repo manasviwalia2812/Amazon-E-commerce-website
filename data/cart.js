@@ -43,7 +43,10 @@ export function removeFromCart(productId) {
   cart.forEach((cartItem) => {
     if (cartItem.productId !== productId) {
       newCart.push(cartItem);
+    } else if (cartItem.quantity > 1) {
+      newCart.push({ ...cartItem, quantity: cartItem.quantity - 1 });
     }
+    
   });
 
   cart = newCart;
