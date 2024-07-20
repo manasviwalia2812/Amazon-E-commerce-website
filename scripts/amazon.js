@@ -84,6 +84,7 @@ function renderProductsGrid(){
         let cartQuantityNumber=updateCartQuantity();
         document.querySelector('.js-cart-quantity')
         .innerHTML = cartQuantityNumber;
+        dataQuantity=1;
       });
     });
 }
